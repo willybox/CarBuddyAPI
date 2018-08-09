@@ -1,5 +1,5 @@
 package fr.carbuddy.bean;
 
-public class User {
+public abstract class User extends Person {
 
 }

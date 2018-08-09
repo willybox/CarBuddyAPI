@@ -3,8 +3,8 @@ package fr.carbuddy.controller.search.driver;
 import java.util.List;
 import java.util.Set;
 
-import fr.carbuddy.model.Criteria;
-import fr.carbuddy.model.Driver;
+import fr.carbuddy.bean.Criteria;
+import fr.carbuddy.bean.Driver;
 
 public interface ISearchDriverController {
 

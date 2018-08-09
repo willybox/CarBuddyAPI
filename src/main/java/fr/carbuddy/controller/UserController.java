@@ -1,7 +1,7 @@
 package fr.carbuddy.controller;
 
+import fr.carbuddy.bean.User;
 import fr.carbuddy.exception.NegativeIdRuntimeException;
-import fr.carbuddy.model.User;
 
 public class UserController {
 

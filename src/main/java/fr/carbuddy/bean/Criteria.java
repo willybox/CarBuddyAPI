@@ -1,4 +1,4 @@
-package fr.carbuddy.model;
+package fr.carbuddy.bean;
 
 public class Criteria {
 

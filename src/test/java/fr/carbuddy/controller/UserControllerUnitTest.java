@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import fr.carbuddy.bean.User;
 import fr.carbuddy.exception.NegativeIdRuntimeException;
-import fr.carbuddy.model.User;
 
 public class UserControllerUnitTest {
 

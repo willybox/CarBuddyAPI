@@ -3,10 +3,10 @@ package fr.carbuddy.controller.search.driver.impl;
 import java.util.List;
 import java.util.Set;
 
+import fr.carbuddy.bean.Criteria;
+import fr.carbuddy.bean.Driver;
+import fr.carbuddy.bean.User;
 import fr.carbuddy.controller.search.driver.ISearchDriverController;
-import fr.carbuddy.model.Criteria;
-import fr.carbuddy.model.Driver;
-import fr.carbuddy.model.User;
 
 public class SearchDriverDBController implements ISearchDriverController {
 

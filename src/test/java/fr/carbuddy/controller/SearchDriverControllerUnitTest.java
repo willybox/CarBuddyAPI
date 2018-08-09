@@ -13,11 +13,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import fr.carbuddy.bean.Criteria;
+import fr.carbuddy.bean.Driver;
+import fr.carbuddy.bean.User;
 import fr.carbuddy.controller.search.driver.ISearchDriverController;
 import fr.carbuddy.controller.search.driver.impl.SearchDriverDBController;
-import fr.carbuddy.model.Criteria;
-import fr.carbuddy.model.Driver;
-import fr.carbuddy.model.User;
 
 /**
  * @author Willy U.

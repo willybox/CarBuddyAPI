@@ -14,7 +14,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import fr.carbuddy.bean.Criteria;
-import fr.carbuddy.bean.Driver;
 import fr.carbuddy.bean.User;
 import fr.carbuddy.controller.search.driver.ISearchDriverController;
 import fr.carbuddy.controller.search.driver.impl.SearchDriverDBController;
@@ -39,7 +38,7 @@ public class SearchDriverControllerUnitTest {
 		User user = Mockito.mock(User.class);
 		ISearchDriverController searchDriverController = new SearchDriverDBController(user);
 		Set<Criteria> criterias = new HashSet<>();
-		List<Driver> drivers = searchDriverController.search(criterias);
+		List<User> drivers = searchDriverController.search(criterias);
 		
 		assertEquals(true, drivers.isEmpty());
 	}

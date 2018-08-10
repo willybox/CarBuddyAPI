@@ -6,7 +6,7 @@ public abstract class Person {
 
     private String name;
     private String firstname;
-    private Adress adress;
+    private Address address;
     private String email;
     private String phone;
     private Date birthday;
@@ -19,8 +19,8 @@ public abstract class Person {
 		return firstname;
 	}
 	
-	public Adress getAdress() {
-		return adress;
+	public Address getAddress() {
+		return address;
 	}
 	
 	public String getEmail() {
@@ -43,8 +43,8 @@ public abstract class Person {
 		this.firstname = firstname;
 	}
 	
-	public void setAdress(Adress adress) {
-		this.adress = adress;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 	public void setEmail(String email) {

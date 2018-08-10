@@ -19,6 +19,78 @@ public class ComplexValidation {
 		Set<ValidationStatus> result = valid.checkValidity();
 		assertEquals(8, result.size());
 	}
+	
+	@Test
+	public void weak_password_error_PASSWORD_NOT_COMPLEX() {
+		User sut = new User();
+		sut.setPassword("123");
+		UserValidation valid = new UserValidation(sut);
+		
+		boolean result = valid
+			.checkValidity()
+			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		assertEquals(true, result);
+	}
+	
+	@Test
+	public void password_no_lower_case_error_PASSWORD_NOT_COMPLEX() {
+		User sut = new User();
+		sut.setPassword("24543DSADASDIJH");
+		UserValidation valid = new UserValidation(sut);
+		
+		boolean result = valid
+			.checkValidity()
+			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		assertEquals(true, result);
+	}
+	
+	@Test
+	public void password_no_upper_case_PASSWORD_NOT_COMPLEX() {
+		User sut = new User();
+		sut.setPassword("asdasdasd45151ads54");
+		UserValidation valid = new UserValidation(sut);
+		
+		boolean result = valid
+			.checkValidity()
+			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		assertEquals(true, result);
+	}
+	
+	@Test
+	public void password_no_digit_error_PASSWORD_NOT_COMPLEX() {
+		User sut = new User();
+		sut.setPassword("asdsadDSADASDIJHf");
+		UserValidation valid = new UserValidation(sut);
+		
+		boolean result = valid
+			.checkValidity()
+			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		assertEquals(true, result);
+	}
+	
+	@Test
+	public void password_ok() {
+		User sut = new User();
+		sut.setPassword("asdOJDSas7");
+		UserValidation valid = new UserValidation(sut);
+		
+		boolean result = valid
+			.checkValidity()
+			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		assertEquals(false, result);
+	}
+	
+	@Test
+	public void password_start_non_alphanumeric_weak_error_PASSWORD_NOT_COMPLEX() {
+		User sut = new User();
+		sut.setPassword("_aaaaaaaaaaaaa");
+		UserValidation valid = new UserValidation(sut);
+		
+		boolean result = valid
+			.checkValidity()
+			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		assertEquals(true, result);
+	}
 
 	@Test
 	public void bad_phone_number_get_error_PHONE_NOT_ONLY_NUMBERS() {

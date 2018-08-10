@@ -58,6 +58,11 @@ public enum ValidationStatus {
 		"Ce mot de passe est faible, veuillez en écrire un avec au moins 7 caractères, une majuscule et un chiffre"
 	),
 	
+	PASSWORD_NOT_SAME(
+		"The password is not the same as the confirmation",
+		"Votre mot de passe est différent de celui de la confirmation"
+	),
+	
 	PHONE_BAD_FORMAT(
 		"Correct phone format is the french one: 10 digits, starting with 01, 06 or 07",
 		"Le bon format de numéro de télephone est celui de France à 10 chiffres commençant par 01, 06 ou 07"

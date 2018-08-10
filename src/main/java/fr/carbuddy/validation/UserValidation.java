@@ -20,10 +20,34 @@ public class UserValidation implements IValidation {
 			return ValidationStatus.PASSWORD_EMPTY;
 		}
 		/** Checking if has a number and has an upper case character */
-		if(user.getPassword().length() <= 7
-		|| !user.getPassword().matches("(\\d|[A-Z])")) {
+		if(user.getPassword().length() <= 7) {
 			return ValidationStatus.PASSWORD_NOT_COMPLEX;
 		}
+		boolean containsDigit = false;
+		boolean containsLowercase = false;
+		boolean containsUppercase = false;
+		boolean isComplex = false;
+		
+		for(int i = 0; i<user.getPassword().length(); i++) {
+			char c = user.getPassword().charAt(i);
+			if(!containsDigit) {
+				containsDigit = Character.isDigit(c);
+			}
+			if(!containsLowercase) {
+				containsLowercase = Character.isLowerCase(c);
+			}
+			if(!containsUppercase) {
+				containsUppercase = Character.isUpperCase(c);
+			}
+			isComplex = containsDigit && containsLowercase && containsUppercase;
+			if(isComplex) {
+				break;
+			}
+		}
+		if(!isComplex) {
+			return ValidationStatus.PASSWORD_NOT_COMPLEX;
+		}
+		
 		return ValidationStatus.OK;
 	}
 

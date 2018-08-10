@@ -4,11 +4,16 @@ import fr.carbuddy.enumeration.ValidationStatus;
 
 public class PasswordService {
 	
+	private String password;
+
+	public PasswordService(String password) {
+		this.password = password;
+	}
+	
 	public ValidationStatus isNewPasswordSameAsConfirmation(
-		String newPassword,
 		String confirmPW
 	) {
-		if(newPassword != null && newPassword.equals(confirmPW)) {
+		if(password != null && !password.equals(confirmPW)) {
 			return ValidationStatus.PASSWORD_NOT_SAME;
 		}
 		return ValidationStatus.OK;

@@ -126,17 +126,6 @@ public class ComplexValidation {
 	}
 
 	@Test
-	public void bad_phone_number_starter_get_error_PHONE_BAD_FORMAT() {
-		User sut = new User();
-		sut.setPhone("0325641897");
-		UserValidation valid = new UserValidation(sut);
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PHONE_BAD_FORMAT);
-		assertEquals(true, result);
-	}
-
-	@Test
 	public void phone_number_01_get_no_phone_error() {
 		User sut = new User();
 		sut.setPhone("0123456789");

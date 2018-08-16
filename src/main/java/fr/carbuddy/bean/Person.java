@@ -2,10 +2,14 @@ package fr.carbuddy.bean;
 
 import java.util.Date;
 
+import fr.carbuddy.enumeration.Gender;
+
 public abstract class Person {
 
+	private Long id;
     private String name;
     private String firstname;
+    private Gender gender;
     private Address address;
     private String email;
     private String phone;
@@ -34,6 +38,14 @@ public abstract class Person {
 	public Date getBirthday() {
 		return birthday;
 	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public Long getId() {
+		return id;
+	}
 	
 	public void setName(String name) {
 		this.name = name;
@@ -57,5 +69,13 @@ public abstract class Person {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

@@ -1,6 +1,8 @@
 package fr.carbuddy.bean;
 
 public class Address {
+	
+	private Long id;
 	private String country;
 	private String city;
 	private String postal;
@@ -22,6 +24,10 @@ public class Address {
 		return street;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
@@ -36,6 +42,10 @@ public class Address {
 
 	public void setStreet(String street) {
 		this.street = street;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

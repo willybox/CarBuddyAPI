@@ -22,9 +22,9 @@ public class PasswordServiceUnitTest {
 		"qwerty123, qwerty123"
 	})
 	@Test
-	public void same_passwords_returns_OK() {
-		PasswordService sut = new PasswordService("hello");
-		ValidationStatus result = sut.isNewPasswordSameAsConfirmation("hello");
+	public void same_passwords_returns_OK(String password, String confirm) {
+		PasswordService sut = new PasswordService(password);
+		ValidationStatus result = sut.isNewPasswordSameAsConfirmation(confirm);
 		assertEquals(ValidationStatus.OK, result);
 	}
 

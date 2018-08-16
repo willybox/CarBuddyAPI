@@ -51,15 +51,7 @@ public class PersonValidation implements IValidation {
 			return ValidationStatus.PHONE_NOT_ONLY_NUMBERS;
 		}
 		
-		if(person.getPhone().charAt(0) == '0') {
-			if(
-				person.getPhone().charAt(1) != '1'
-				&& person.getPhone().charAt(1) != '6'
-				&& person.getPhone().charAt(1) != '7'
-			) {
-				return ValidationStatus.PHONE_BAD_FORMAT;
-			}
-		} else {
+		if(person.getPhone().charAt(0) != '0') {
 			return ValidationStatus.PHONE_BAD_FORMAT;
 		}
 		return ValidationStatus.OK;

@@ -93,6 +93,11 @@ public enum ValidationStatus {
 		"Veuillez préciser votre rue"
 	),
 	
+	USERNAME_ALREADY_EXISTS(
+		"Username already exists",
+		"Ce nom d'utilisateur est déjà utilisé"
+	),
+	
 	USERNAME_EMPTY(
 		"Username cannot be empty",
 		"Votre nom d'utilisateur ne peut pas être vide"

@@ -52,7 +52,7 @@ public class UserValidation implements IValidation {
 	}
 
 	private ValidationStatus validationUsername() {
-		if(AddOnString.isNullOrEmpty(user.getUserName())) {
+		if(AddOnString.isNullOrEmpty(user.getUsername())) {
 			return ValidationStatus.USERNAME_EMPTY;
 		}
 		return ValidationStatus.OK;

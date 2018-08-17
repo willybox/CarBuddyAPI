@@ -7,7 +7,7 @@ import fr.carbuddy.exception.DAORuntimeException;
 
 public interface UserDAO {
 
-    public void create(User user) throws DAORuntimeException;
+    public User create(User user) throws DAORuntimeException;
     
     public Set<User> findByEmail(String email) throws DAORuntimeException;
     
@@ -18,5 +18,7 @@ public interface UserDAO {
     public boolean updateUser(User userToUpdate, User newUser) throws DAORuntimeException;
     
     public boolean deleteUser(User userToDelete) throws DAORuntimeException;
+
+	public User findByUsername(String username);
     
 }

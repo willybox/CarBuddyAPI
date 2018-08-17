@@ -6,19 +6,28 @@ import java.util.Set;
 
 import fr.carbuddy.bean.Address;
 import fr.carbuddy.bean.User;
+import fr.carbuddy.dao.DAOFactory;
+import fr.carbuddy.enumeration.Gender;
 import fr.carbuddy.enumeration.ValidationStatus;
 import fr.carbuddy.enumeration.string.StatusUser;
 import fr.carbuddy.validation.AddressValidation;
 import fr.carbuddy.validation.UserValidation;
+import util.library.add.on.encryption.AddOnEncryption;
 
 public class CreationService {
 	
 	private Set<ValidationStatus> errorsValidation = new HashSet<>();
+	private DAOFactory daoFactory;
+	
+	public CreationService(DAOFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
 	
 	public User createUser(
 		String username,
 		String password,
 		String confirmPW,
+		String sex,
 		String email,
 		String name,
 		String firstname,
@@ -29,6 +38,11 @@ public class CreationService {
 
 		User newUser = new User();
 		newUser.setAddress(adress);
+		if(sex.equals("female")) {
+			newUser.setGender(Gender.FEMALE);
+		} else {
+			newUser.setGender(Gender.MALE);
+		}
 		newUser.setBirthday(birthDate);
 		newUser.setEmail(email);
 		newUser.setFirstname(firstname);
@@ -36,7 +50,7 @@ public class CreationService {
 		newUser.setPhone(phone);
 		newUser.setPassword(password);
 		newUser.setStatusUser(StatusUser.BUDDY);
-		newUser.setUserName(username);
+		newUser.setUsername(username);
 		
 		/** Clearing old errors */
 		errorsValidation = new UserValidation(newUser).checkValidity();
@@ -48,8 +62,18 @@ public class CreationService {
 			errorsValidation.add(passwordsMatchStatus);
 		}
 		
+		/** Username unicity */
+		if(daoFactory.getUserDAO().findByUsername(username) != null) {
+			/** Adding new error if found */
+			errorsValidation.add(ValidationStatus.USERNAME_ALREADY_EXISTS);
+		}
+		
 		if(errorsValidation.isEmpty()) {
-			//TODO Persistence
+			/** Encrypting password */
+		    newUser.setPassword(AddOnEncryption.encryptString(password));
+		    
+			/** Persisting data */
+			daoFactory.getUserDAO().create(newUser);
 			
 			return newUser;
 		}
@@ -72,7 +96,8 @@ public class CreationService {
 		/** Clearing old errors */
 		errorsValidation = new AddressValidation(address).checkValidity();
 		if(errorsValidation.isEmpty()) {
-			//TODO Persistence
+			/** Persisting data */
+			daoFactory.getAddressDAO().create(address);
 			
 			return address;
 		}

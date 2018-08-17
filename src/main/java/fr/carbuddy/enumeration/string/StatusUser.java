@@ -1,5 +1,16 @@
 package fr.carbuddy.enumeration.string;
 
 public enum StatusUser {
-	DRIVER, BUDDY
+	BUDDY(0), DRIVER(1)
+	;
+	
+	private int value;
+	
+	private StatusUser(int val) {
+		value = val;
+	}
+	
+	public int getValue() {
+		return value;
+	}
 }

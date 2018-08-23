@@ -7,8 +7,6 @@ public interface DAOFactory {
 	public UserDAO getUserDAO();
 	
 	public AddressDAO getAddressDAO();
-
-	public void disconnect();
 	
 	public Connection getConnection();
 }

@@ -8,6 +8,7 @@ public class User extends Person {
 	private StatusUser statusUser;
 	private String username;
 	private String password;
+	private String avatar;
 
 	public StatusUser getStatusUser() {
 		return statusUser;
@@ -25,6 +26,10 @@ public class User extends Person {
 		return id;
 	}
 
+	public String getAvatar() {
+		return avatar;
+	}
+
 	public void setStatusUser(StatusUser statusUser) {
 		this.statusUser = statusUser;
 	}
@@ -39,6 +44,10 @@ public class User extends Person {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 }

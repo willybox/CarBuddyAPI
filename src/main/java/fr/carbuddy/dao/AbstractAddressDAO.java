@@ -4,12 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import fr.carbuddy.bean.Address;
+import fr.carbuddy.exception.DAORuntimeException;
 
 public abstract class AbstractAddressDAO implements AddressDAO {
 	/**
-	 * Simple méthode utilitaire permettant de faire la correspondance (le
-	 * mapping) entre une ligne issue de la table des utilisateurs (un
-	 * ResultSet) et un bean Utilisateur.
+	 * Utility function allowing to match columns from address
+	 * table and bean properties
 	 * @param resultSet
 	 * @return
 	 * @throws SQLException
@@ -31,5 +31,15 @@ public abstract class AbstractAddressDAO implements AddressDAO {
         address.setPostal(postal);
         address.setStreet(street);
         return address;
+	}
+
+	@Override
+	public Address getAddress(String country, String city, String postal, String street) throws DAORuntimeException {
+		Address dummyAddress = new Address();
+		dummyAddress.setCity(city);
+		dummyAddress.setCountry(country);
+		dummyAddress.setPostal(postal);
+		dummyAddress.setStreet(street);
+		return getAddress(dummyAddress);
 	}
 }

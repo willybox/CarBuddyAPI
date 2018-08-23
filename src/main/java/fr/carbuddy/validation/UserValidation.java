@@ -15,7 +15,7 @@ public class UserValidation implements IValidation {
 		this.user = user;
 	}
 
-	private ValidationStatus validationPassword() {
+	private ValidationStatus validationNewPassword() {
 		if(AddOnString.isNullOrEmpty(user.getPassword())) {
 			return ValidationStatus.PASSWORD_EMPTY;
 		}
@@ -65,7 +65,7 @@ public class UserValidation implements IValidation {
 	@Override
 	public Set<ValidationStatus> checkValidity() {
 		Set<ValidationStatus> listErrors = new HashSet<>();
-		listErrors.add(validationPassword());
+		listErrors.add(validationNewPassword());
 		listErrors.add(validationUsername());
 		listErrors.addAll(validationPerson());
 		

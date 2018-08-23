@@ -8,6 +8,36 @@ public enum ValidationStatus {
 		"Erreur: L'adresse est nulle"
 	),
 	
+	AVATAR_BAD_USE_REQUEST(
+		"This kind of request is not supported, please use adequate form in order to send your file.",
+		"Ce type de requête n'est pas supporté, merci d'utiliser le formulaire prévu pour envoyer votre fichier."
+	),
+	
+	AVATAR_NOT_IMAGE(
+		"The file MUST be an image.",
+		"Le fichier envoyé doit être une image."
+	),
+	
+	AVATAR_NOT_READABLE(
+		"Seems like the avatar image is corrupted or does not exists...",
+		"Il semblerait que l'avatar soit corrompue ou n'existe plus..."
+	),
+	
+	AVATAR_NULL(
+		"Error: Avatar is null",
+		"Erreur: L'avatar est nul"
+	),
+	
+	AVATAR_OVER_SIZE(
+		"Le fichier envoyé ne doit pas dépasser 1Mo.",
+		""
+	),
+	
+	AVATAR_WRITE_FAILURE(
+		"Error while writing file into disk.",
+		"Erreur lors de l'écriture du fichier sur le disque."
+	),
+	
 	BIRTHDAY_NULL(
 		"Error: birthday is null. How sad... :(",
 		"Erreur: la date de naissance est nulle. Que c'est triste... :("
@@ -28,6 +58,11 @@ public enum ValidationStatus {
 		"Veuillez préciser votre ville"
 	),
 	
+	CONFIGURATION_LIMITATION(
+		"Error on server configuration",
+		"Erreur de configuration du serveur."
+	),
+	
 	COUNTRY_EMPTY(
 		"Please select your country",
 		"Veuillez sélectionner votre pays"
@@ -41,6 +76,11 @@ public enum ValidationStatus {
 	FIRSTNAME_EMPTY(
 		"The firstname can not be empty",
 		"Le prénom ne peut pas être vide"
+	),
+	
+	INVALID_USERNAME_OR_PASSWORD(
+		"You have entered an invalid username or password.",
+		"Vous avez entré le mauvais nom d'utilisateur ou mot de passe."
 	),
 	
 	NAME_EMPTY(
@@ -61,6 +101,11 @@ public enum ValidationStatus {
 	PASSWORD_NOT_SAME(
 		"The password is not the same as the confirmation",
 		"Votre mot de passe est différent de celui de la confirmation"
+	),
+	
+	PASSWORD_TOO_MUCH_TRY(
+		"You have tried 7 times to connect with the wrong password. Try again in 24h or request for a password reset if forgotten",
+		"Vous avez tenté de vous connecter 7 fois avec de mauvais mots de passe. Réessayez dans 24h ou faites une demande réinitialisation de mot de passe si vous l'avez oublié"
 	),
 	
 	PHONE_BAD_FORMAT(

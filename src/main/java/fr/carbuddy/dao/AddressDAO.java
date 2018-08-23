@@ -1,5 +1,7 @@
 package fr.carbuddy.dao;
 
+import java.util.List;
+
 import fr.carbuddy.bean.Address;
 import fr.carbuddy.exception.DAORuntimeException;
 
@@ -15,7 +17,19 @@ public interface AddressDAO {
     
     /** Will retrieve the address if it already exists in database */
     public Address getAddress(Address addressproperties) throws DAORuntimeException;
+    
+    /** For auto completion */
+    public List<String> listCountry();
 
+    /** For auto completion */
+    public List<String> listPostal();
+
+    /** For auto completion */
+    public List<String> listCity();
+
+    /** For auto completion */
+    public List<String> listStreet();
+    
     /** Will retrieve the address if it already exists in database */
     public Address getAddress(
     	String country,

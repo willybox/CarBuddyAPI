@@ -6,7 +6,7 @@ import fr.carbuddy.enumeration.Gender;
 
 public abstract class Person {
 
-	private Long id;
+	private Long personId;
     private String name;
     private String firstname;
     private Gender gender;
@@ -43,8 +43,8 @@ public abstract class Person {
 		return gender;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getPersonId() {
+		return personId;
 	}
 	
 	public void setName(String name) {
@@ -75,7 +75,7 @@ public abstract class Person {
 		this.gender = gender;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setPersonId(Long personId) {
+		this.personId = personId;
 	}
 }

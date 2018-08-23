@@ -9,9 +9,8 @@ import fr.carbuddy.enumeration.string.StatusUser;
 
 public abstract class AbstractUserDAO implements UserDAO {
 	/**
-	 * Simple méthode utilitaire permettant de faire la correspondance (le
-	 * mapping) entre une ligne issue de la table des utilisateurs (un
-	 * ResultSet) et un bean Utilisateur.
+	 * Utility function allowing to match columns from user
+	 * table and bean properties
 	 * @param resultSet
 	 * @return
 	 * @throws SQLException
@@ -22,12 +21,15 @@ public abstract class AbstractUserDAO implements UserDAO {
         
         /** -- Abstract Person properties -- */
 
+		user.setPersonId(resultSet.getLong("personId"));
+        user.setName(resultSet.getString("name"));
+        user.setFirstname(resultSet.getString("firstname"));
         Gender genderEnum = Gender.getEnum(resultSet.getInt("gender"));
         user.setGender(genderEnum);
-        user.setFirstname(resultSet.getString("firstname"));
-        user.setName(resultSet.getString("name"));
+        /** Address must be set outside this function (Append it) */
         user.setEmail(resultSet.getString("email"));
         user.setPhone(resultSet.getString("phone"));
+        user.setBirthday(resultSet.getDate("birthday"));
         
         /** -- User properties -- */
         
@@ -44,6 +46,7 @@ public abstract class AbstractUserDAO implements UserDAO {
 
         user.setUsername(resultSet.getString("username"));
         user.setPassword(resultSet.getString("password"));
+        user.setAvatar(resultSet.getString("avatar"));
 	    return user;
 	}
 }

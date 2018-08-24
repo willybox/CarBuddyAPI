@@ -77,7 +77,7 @@ public class DAOFactoryMySQLImpl implements DAOFactory {
             config.setUsername(userName);
             config.setPassword(pass);
             
-            /** Pool size setting */
+            /** Pool size setting (Greatly depending on traffic!)*/
             config.setMinConnectionsPerPartition(5);
             config.setMaxConnectionsPerPartition(10);
             config.setPartitionCount(2);
@@ -97,6 +97,15 @@ public class DAOFactoryMySQLImpl implements DAOFactory {
         return instance;
     }
 
+    /**
+     * <p>Getting a Connection with com.jolbox.bonecp.BoneCP
+     * that can handle pool connection (Better multiple
+     * connections manager)</p>
+     * <p><i><u>Note:</u> When a connections pool is set, calling
+     * Connection::close will not literally close the
+     * connection but will return it to the pool.
+     * </i></p>
+     */
 	public Connection getConnection() {
 		try {
 			return connectionPool.getConnection();

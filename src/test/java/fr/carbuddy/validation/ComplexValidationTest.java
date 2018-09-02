@@ -9,15 +9,59 @@ import org.junit.Test;
 
 import fr.carbuddy.bean.User;
 import fr.carbuddy.enumeration.ValidationStatus;
+import fr.carbuddy.exception.NotValidException;
+import fr.carbuddy.validation.UserValidation;
 
-public class ComplexValidation {
+public class ComplexValidationTest {
 
 	@Test
-	public void not_full_user_triggers_all_error() {
+	public void not_full_user_triggers_all_empty_error() {
 		User sut = new User();
 		UserValidation valid = new UserValidation(sut);
-		Set<ValidationStatus> result = valid.checkValidity();
-		assertEquals(8, result.size());
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			assertEquals(
+				true,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PASSWORD_EMPTY)
+			);
+			assertEquals(
+				true,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.EMAIL_EMPTY)
+			);
+			assertEquals(
+				true,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_EMPTY)
+			);
+			assertEquals(
+				true,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.USERNAME_EMPTY)
+			);
+			assertEquals(
+				true,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.NAME_EMPTY)
+			);
+			assertEquals(
+				true,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.FIRSTNAME_EMPTY)
+			);
+			assertEquals(
+				true,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.BIRTHDAY_NULL)
+			);
+			assertEquals(
+				true,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.ADDRESS_NULL)
+			);
+		}
 	}
 	
 	@Test
@@ -26,9 +70,15 @@ public class ComplexValidation {
 		sut.setPassword("123");
 		UserValidation valid = new UserValidation(sut);
 		
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		}
+			
 		assertEquals(true, result);
 	}
 	
@@ -38,9 +88,14 @@ public class ComplexValidation {
 		sut.setPassword("24543DSADASDIJH");
 		UserValidation valid = new UserValidation(sut);
 		
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		}
 		assertEquals(true, result);
 	}
 	
@@ -49,10 +104,15 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPassword("asdasdasd45151ads54");
 		UserValidation valid = new UserValidation(sut);
-		
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		}
 		assertEquals(true, result);
 	}
 	
@@ -61,10 +121,15 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPassword("asdsadDSADASDIJHf");
 		UserValidation valid = new UserValidation(sut);
-		
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		}
 		assertEquals(true, result);
 	}
 	
@@ -73,10 +138,15 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPassword("asdOJDSas7");
 		UserValidation valid = new UserValidation(sut);
-		
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		}
 		assertEquals(false, result);
 	}
 	
@@ -85,10 +155,15 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPassword("_aaaaaaaaaaaaa");
 		UserValidation valid = new UserValidation(sut);
-		
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PASSWORD_NOT_COMPLEX);
+		}
 		assertEquals(true, result);
 	}
 
@@ -97,9 +172,14 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPhone("01468754A1");
 		UserValidation valid = new UserValidation(sut);
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PHONE_NOT_ONLY_NUMBERS);
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PHONE_NOT_ONLY_NUMBERS);
+		}
 		assertEquals(true, result);
 	}
 
@@ -108,9 +188,14 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPhone("4587963201");
 		UserValidation valid = new UserValidation(sut);
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PHONE_BAD_FORMAT);
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PHONE_BAD_FORMAT);
+		}
 		assertEquals(true, result);
 	}
 
@@ -119,9 +204,14 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPhone("041598");
 		UserValidation valid = new UserValidation(sut);
-		boolean result = valid
-			.checkValidity()
-			.contains(ValidationStatus.PHONE_BAD_LENGTH);
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.PHONE_BAD_LENGTH);
+		}
 		assertEquals(true, result);
 	}
 
@@ -130,13 +220,30 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPhone("0123456789");
 		UserValidation valid = new UserValidation(sut);
-		Set<ValidationStatus> toCheck = valid.checkValidity();
-		boolean result = toCheck.contains(ValidationStatus.PHONE_BAD_FORMAT)
-			|| toCheck.contains(ValidationStatus.PHONE_BAD_LENGTH)
-			|| toCheck.contains(ValidationStatus.PHONE_EMPTY)
-			|| toCheck.contains(ValidationStatus.PHONE_NOT_ONLY_NUMBERS)
-		;
-		assertEquals(false, result);
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_BAD_FORMAT)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_BAD_LENGTH)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_EMPTY)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_NOT_ONLY_NUMBERS)
+			);
+		}
 	}
 
 	@Test
@@ -144,13 +251,30 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPhone("0623456789");
 		UserValidation valid = new UserValidation(sut);
-		Set<ValidationStatus> toCheck = valid.checkValidity();
-		boolean result = toCheck.contains(ValidationStatus.PHONE_BAD_FORMAT)
-			|| toCheck.contains(ValidationStatus.PHONE_BAD_LENGTH)
-			|| toCheck.contains(ValidationStatus.PHONE_EMPTY)
-			|| toCheck.contains(ValidationStatus.PHONE_NOT_ONLY_NUMBERS)
-		;
-		assertEquals(false, result);
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_BAD_FORMAT)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_BAD_LENGTH)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_EMPTY)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_NOT_ONLY_NUMBERS)
+			);
+		}
 	}
 
 	@Test
@@ -158,13 +282,30 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setPhone("0723456789");
 		UserValidation valid = new UserValidation(sut);
-		Set<ValidationStatus> toCheck = valid.checkValidity();
-		boolean result = toCheck.contains(ValidationStatus.PHONE_BAD_FORMAT)
-			|| toCheck.contains(ValidationStatus.PHONE_BAD_LENGTH)
-			|| toCheck.contains(ValidationStatus.PHONE_EMPTY)
-			|| toCheck.contains(ValidationStatus.PHONE_NOT_ONLY_NUMBERS)
-		;
-		assertEquals(false, result);
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_BAD_FORMAT)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_BAD_LENGTH)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_EMPTY)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.PHONE_NOT_ONLY_NUMBERS)
+			);
+		}
 	}
 
 	@Test
@@ -172,8 +313,14 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setBirthday(new DateTime(2040, 6, 12, 0, 0).toDate());
 		UserValidation valid = new UserValidation(sut);
-		Set<ValidationStatus> toCheck = valid.checkValidity();
-		boolean result = toCheck.contains(ValidationStatus.BIRTHDAY_FUTURE);
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.BIRTHDAY_FUTURE);
+		}
 		assertEquals(true, result);
 	}
 
@@ -182,19 +329,42 @@ public class ComplexValidation {
 		User sut = new User();
 		sut.setBirthday(new DateTime(2017, 6, 12, 0, 0).toDate());
 		UserValidation valid = new UserValidation(sut);
-		Set<ValidationStatus> toCheck = valid.checkValidity();
-		boolean result = toCheck.contains(ValidationStatus.BIRTHDAY_MINOR);
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			result = e
+				.getErrorsValidation()
+				.contains(ValidationStatus.BIRTHDAY_MINOR);
+		}
 		assertEquals(true, result);
 	}
 
 	@Test
 	public void validation_birthday_ok() {
 		User sut = new User();
-		sut.setBirthday(new DateTime(2018, 6, 12, 0, 0).toDate());
+		sut.setBirthday(new DateTime(1998, 6, 12, 0, 0).toDate());
 		UserValidation valid = new UserValidation(sut);
-		Set<ValidationStatus> toCheck = valid.checkValidity();
-		boolean result = toCheck.contains(ValidationStatus.BIRTHDAY_NULL)
-		;
-		assertEquals(false, result);
+		boolean result = false;
+		try {
+			valid.checkValidity();
+		} catch (NotValidException e) {
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.BIRTHDAY_NULL)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.BIRTHDAY_FUTURE)
+			);
+			assertEquals(
+				false,
+				e.getErrorsValidation()
+					.contains(ValidationStatus.BIRTHDAY_MINOR)
+			);
+			
+		}
 	}
 }

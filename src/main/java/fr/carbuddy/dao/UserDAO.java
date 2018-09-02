@@ -5,14 +5,13 @@ import java.util.List;
 import fr.carbuddy.bean.User;
 import fr.carbuddy.enumeration.order.by.UserOrderBy;
 import fr.carbuddy.exception.DAORuntimeException;
+import fr.carbuddy.exception.NotValidException;
 
 public interface UserDAO {
 
-    public User create(User user) throws DAORuntimeException;
+    public User create(User user) throws DAORuntimeException, NotValidException;
     
-    public List<User> findByEmail(String email) throws DAORuntimeException;
-    
-    public List<User> findByName(String name) throws DAORuntimeException;
+    public User findByEmail(String email) throws DAORuntimeException;
     
     public User findById(Long id) throws DAORuntimeException;
     

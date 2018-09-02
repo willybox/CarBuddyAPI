@@ -1,10 +1,10 @@
 package fr.carbuddy.validation;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import fr.carbuddy.bean.Address;
 import fr.carbuddy.enumeration.ValidationStatus;
+import fr.carbuddy.exception.NotValidException;
 import util.library.add.on.string.AddOnString;
 
 public class AddressValidation implements IValidation {
@@ -44,8 +44,9 @@ public class AddressValidation implements IValidation {
 	}
 
 	@Override
-	public Set<ValidationStatus> checkValidity() {
-		Set<ValidationStatus> listErrors = new HashSet<>();
+	public boolean checkValidity() throws NotValidException {
+		NotValidException exceptionValidation = new NotValidException();
+		Set<ValidationStatus> listErrors = exceptionValidation.getErrorsValidation();
 		listErrors.add(validationCountry());
 		listErrors.add(validationCity());
 		listErrors.add(validationPostal());
@@ -54,7 +55,11 @@ public class AddressValidation implements IValidation {
 		/** Removing OK because it is not an error */
 		listErrors.remove(ValidationStatus.OK);
 		
-		return listErrors;
+		if(!listErrors.isEmpty()) {
+			throw exceptionValidation;
+		}
+		
+		return true;
 	}
 
 }

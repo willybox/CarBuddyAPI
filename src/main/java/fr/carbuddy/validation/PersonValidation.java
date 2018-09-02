@@ -6,6 +6,7 @@ import java.util.Set;
 
 import fr.carbuddy.bean.Person;
 import fr.carbuddy.enumeration.ValidationStatus;
+import fr.carbuddy.exception.NotValidException;
 import util.library.add.on.date.AddOnDate;
 import util.library.add.on.string.AddOnString;
 
@@ -71,17 +72,23 @@ public class PersonValidation implements IValidation {
 	}
 	
 	private Set<ValidationStatus> validationAddress() {
+		Set<ValidationStatus> set = new HashSet<>();
 		if(person.getAddress() == null) {
-			Set<ValidationStatus> set = new HashSet<>();
 			set.add(ValidationStatus.ADDRESS_NULL);
 			return set;
 		}
-		return new AddressValidation(person.getAddress()).checkValidity();
+		try {
+			new AddressValidation(person.getAddress()).checkValidity();
+		} catch (NotValidException e) {
+			return e.getErrorsValidation();
+		}
+		return set;
 	}
 
 	@Override
-	public Set<ValidationStatus> checkValidity() {
-		Set<ValidationStatus> listErrors = new HashSet<>();
+	public boolean checkValidity() throws NotValidException {
+		NotValidException exceptionValidation = new NotValidException();
+		Set<ValidationStatus> listErrors = exceptionValidation.getErrorsValidation();
 		listErrors.add(validationName());
 		listErrors.add(validationFirstname());
 		listErrors.add(validationEmail());
@@ -92,7 +99,11 @@ public class PersonValidation implements IValidation {
 		/** Removing OK because it is not an error */
 		listErrors.remove(ValidationStatus.OK);
 		
-		return listErrors;
+		if(!listErrors.isEmpty()) {
+			throw exceptionValidation;
+		}
+		
+		return true;
 	}
 
 }

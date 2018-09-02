@@ -1,7 +1,6 @@
 package fr.carbuddy.service;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import fr.carbuddy.bean.Address;
@@ -10,13 +9,11 @@ import fr.carbuddy.dao.DAOFactory;
 import fr.carbuddy.enumeration.Gender;
 import fr.carbuddy.enumeration.ValidationStatus;
 import fr.carbuddy.enumeration.string.StatusUser;
-import fr.carbuddy.validation.AddressValidation;
-import fr.carbuddy.validation.UserValidation;
+import fr.carbuddy.exception.DAORuntimeException;
+import fr.carbuddy.exception.NotValidException;
 import util.library.add.on.encryption.AddOnEncryption;
 
 public class CreationService {
-	
-	private Set<ValidationStatus> errorsValidation = new HashSet<>();
 	private DAOFactory daoFactory;
 	
 	public CreationService(DAOFactory daoFactory) {
@@ -34,8 +31,9 @@ public class CreationService {
 		String phone,
 		Date birthDate,
 		Address adress
-	) {
-
+	) throws NotValidException {
+		NotValidException notValidException = new NotValidException();
+		Set<ValidationStatus> errorsValidation = notValidException.getErrorsValidation();
 		User newUser = new User();
 		newUser.setAddress(adress);
 		if(sex.equals("female")) {
@@ -51,9 +49,6 @@ public class CreationService {
 		newUser.setPassword(password);
 		newUser.setStatusUser(StatusUser.BUDDY);
 		newUser.setUsername(username);
-		
-		/** Clearing old errors */
-		errorsValidation = new UserValidation(newUser).checkValidity();
 		
 		ValidationStatus passwordsMatchStatus = new PasswordService(password)
 			.isNewPasswordSameAsConfirmation(confirmPW);
@@ -73,7 +68,13 @@ public class CreationService {
 		    newUser.setPassword(AddOnEncryption.encryptString(password));
 		    
 			/** Persisting data */
-			daoFactory.getUserDAO().create(newUser);
+			try {
+				daoFactory.getUserDAO().create(newUser);
+			} catch (DAORuntimeException e) {
+			} catch (NotValidException e) {
+				errorsValidation.addAll(e.getErrorsValidation());
+				throw e;
+			}
 			
 			return newUser;
 		}
@@ -85,7 +86,7 @@ public class CreationService {
 		String country,
 		String postal,
 		String street
-	) {
+	) throws NotValidException {
 
 		Address address = new Address();
 		address.setCity(city);
@@ -93,19 +94,10 @@ public class CreationService {
 		address.setPostal(postal);
 		address.setStreet(street);
 
-		/** Clearing old errors */
-		errorsValidation = new AddressValidation(address).checkValidity();
-		if(errorsValidation.isEmpty()) {
-			/** Persisting data */
-			daoFactory.getAddressDAO().create(address);
-			
-			return address;
-		}
-		return null;
-	}
-
-	public Set<ValidationStatus> getErrorsValidation() {
-		return errorsValidation;
+		/** Persisting data */
+		daoFactory.getAddressDAO().create(address);
+		
+		return address;
 	}
 
 }

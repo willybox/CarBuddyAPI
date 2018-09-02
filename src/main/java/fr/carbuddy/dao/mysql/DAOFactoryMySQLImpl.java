@@ -1,5 +1,8 @@
 package fr.carbuddy.dao.mysql;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -15,6 +18,7 @@ import fr.carbuddy.dao.UserDAO;
 import fr.carbuddy.dao.mysql.impl.AddressDAOMySQLImpl;
 import fr.carbuddy.dao.mysql.impl.UserDAOMySQLImpl;
 import fr.carbuddy.exception.DAOConfigurationRuntimeException;
+import fr.carbuddy.global.GlobalValues;
 
 public class DAOFactoryMySQLImpl implements DAOFactory {
 
@@ -45,8 +49,29 @@ public class DAOFactoryMySQLImpl implements DAOFactory {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream fichierProperties = classLoader.getResourceAsStream(FICHIER_PROPERTIES);
 
-        if (fichierProperties == null) {
-            throw new DAOConfigurationRuntimeException("Le fichier properties " + FICHIER_PROPERTIES + " est introuvable.");
+        /** If properties file not in compiled JAR */
+        if(fichierProperties == null) {
+        	File fileSystemProperties = new File("src/main/java/" + FICHIER_PROPERTIES);
+        	if(!GlobalValues.NO_DEBUG) {
+        		System.out.println(fileSystemProperties.getAbsolutePath());
+        	}
+        	if(fileSystemProperties.exists()) {
+        		try {
+					fichierProperties = new FileInputStream(fileSystemProperties);
+				} catch (FileNotFoundException e) {
+					throw new DAOConfigurationRuntimeException(
+		            	"Le fichier "
+			            + fileSystemProperties.getAbsolutePath()
+			            + " est inaccessible."
+		            );
+				}
+        	} else {
+	            throw new DAOConfigurationRuntimeException(
+	            	"Le fichier properties "
+		            + FICHIER_PROPERTIES
+		            + " est introuvable."
+	            );
+        	}
         }
         try {
             properties.load(fichierProperties);
@@ -56,7 +81,10 @@ public class DAOFactoryMySQLImpl implements DAOFactory {
             pass = properties.getProperty(PROPERTY_PASSWORD);
 
         } catch (IOException e) {
-            throw new DAOConfigurationRuntimeException("Impossible de charger le fichier properties " + FICHIER_PROPERTIES, e);
+            throw new DAOConfigurationRuntimeException(
+            	"Impossible de charger le fichier properties " + FICHIER_PROPERTIES,
+	            e
+            );
         }
 
         try {

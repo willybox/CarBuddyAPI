@@ -12,8 +12,10 @@ import fr.carbuddy.dao.AbstractUserDAO;
 import fr.carbuddy.dao.DAOFactory;
 import fr.carbuddy.enumeration.order.by.UserOrderBy;
 import fr.carbuddy.exception.DAORuntimeException;
+import fr.carbuddy.exception.NotValidException;
 import fr.carbuddy.global.GlobalValues;
 import fr.carbuddy.service.PersonService;
+import fr.carbuddy.validation.UserValidation;
 import util.library.add.on.sql.AddOnSQL;
 
 public class UserDAOMySQLImpl extends AbstractUserDAO {
@@ -24,7 +26,10 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
 	}
 
 	@Override
-	public User create(User userToCreate) throws DAORuntimeException {
+	public User create(User userToCreate) throws DAORuntimeException, NotValidException {
+		/** If exception triggered, will be directly thrown */
+		new UserValidation(userToCreate).checkValidity();
+		
 		Connection connection = daoFactory.getConnection();
         PreparedStatement pStatement = null;
         ResultSet resultSet = null;
@@ -198,9 +203,52 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
 	}
 
 	@Override
-	public List<User> findByEmail(String arg0) throws DAORuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+	public User findByEmail(String email) throws DAORuntimeException {
+		//TODO To test
+		Connection connection = daoFactory.getConnection();
+        User user = null;
+        PreparedStatement pStatement = null;
+        ResultSet resultSet = null;
+        try {
+        	
+        	StringBuilder reqStr = new StringBuilder()
+	        	.append("SELECT * ")
+	        	.append("FROM user ")
+	        	.append("WHERE email=? ")
+	        	.append(";")
+        	;
+        	
+        	System.out.print("Request \"" + reqStr.toString());
+        	
+            /** Creating requests manager */
+        	pStatement = AddOnSQL
+        		.initPreparedStatement(
+    				connection,
+        			reqStr.toString(),
+        			false,
+        			email
+        		);
+            
+            /** Executing SELECT */
+            resultSet = pStatement.executeQuery();
+            System.out.println("\" done.");
+     
+            /** Retrieving data from result set */
+            if(resultSet.next()) {
+                user = getUserFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAORuntimeException("Error during the connection");
+        } finally {
+        	AddOnSQL.fancyClosures(
+        		resultSet,
+        		pStatement,
+        		connection,
+        		GlobalValues.NO_DEBUG
+        	);
+        }
+
+        return user;
 	}
 
 	@Override
@@ -253,15 +301,58 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
 	}
 
 	@Override
-	public List<User> findByName(String arg0) throws DAORuntimeException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public boolean updateUser(User userToUpdate, User newUserInfo) throws DAORuntimeException {
+		//TODO To test
+		Connection connection = daoFactory.getConnection();
+		PreparedStatement pStatement = null;
+        ResultSet resultSet = null;
+        boolean updated = false;
+        try {
+        	StringBuilder reqStr = new StringBuilder()
+	        	.append("UPDATE user ")
+	        	//TODO
+	        	//.append("SET (country, city, postal, street) ")
+	        	.append("")
+	        	.append(";")
+        	;
+        	/** Creating requests manager */
+        	pStatement = AddOnSQL
+        		.initPreparedStatement(
+    				connection,
+    				reqStr.toString(),
+        			true,
+        			userToUpdate.getId(),
+        			newUserInfo.getAddress(),
+        			newUserInfo.getAvatar(),
+        			newUserInfo.getBirthday(),
+        			newUserInfo.getEmail(),
+        			newUserInfo.getFirstname(),
+        			newUserInfo.getGender(),
+        			newUserInfo.getName(),
+        			newUserInfo.getStatusUser(),
+        			newUserInfo.getUsername(),
+        			//TODO password?
+        			//newUserInfo.getPassword(),
+        			newUserInfo.getPersonId()
+        		);
+        	int successCount = pStatement.executeUpdate();
+        	
+        	updated = successCount > 0;
+            if(!updated) {
+            	throw new DAORuntimeException("Address update failed.");
+            }
+        } catch (SQLException e) {
+            throw new DAORuntimeException("Error during the connection");
+        } finally {
+        	AddOnSQL.fancyClosures(
+        		resultSet,
+        		pStatement,
+        		connection,
+        		GlobalValues.NO_DEBUG
+        	);
+        }
 
-	@Override
-	public boolean updateUser(User arg0, User arg1) throws DAORuntimeException {
-		// TODO Auto-generated method stub
-		return false;
+        return updated;
 	}
 
 	@Override

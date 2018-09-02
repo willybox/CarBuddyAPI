@@ -4,14 +4,13 @@ import java.util.List;
 
 import fr.carbuddy.bean.Address;
 import fr.carbuddy.exception.DAORuntimeException;
+import fr.carbuddy.exception.NotValidException;
 
 public interface AddressDAO {
 
-    public Address create(Address address) throws DAORuntimeException;
+    public Address create(Address address) throws DAORuntimeException, NotValidException;
     
     public Address findById(Long id) throws DAORuntimeException;
-    
-    public boolean updateAddress(Address addressToUpdate, Address newAddress) throws DAORuntimeException;
     
     public boolean deleteAddress(Address addressToDelete) throws DAORuntimeException;
     

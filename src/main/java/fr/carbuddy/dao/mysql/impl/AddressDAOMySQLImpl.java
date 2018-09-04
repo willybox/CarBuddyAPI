@@ -8,20 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.carbuddy.bean.Address;
-import fr.carbuddy.dao.AbstractAddressDAO;
 import fr.carbuddy.dao.DAOFactory;
+import fr.carbuddy.dao.mysql.AbstractAddressDAOMySQL;
 import fr.carbuddy.exception.DAORuntimeException;
 import fr.carbuddy.exception.NotValidException;
 import fr.carbuddy.global.GlobalValues;
 import fr.carbuddy.validation.AddressValidation;
 import util.library.add.on.sql.AddOnSQL;
 
-public class AddressDAOMySQLImpl extends AbstractAddressDAO {
-
-	private DAOFactory daoFactory;
-
+public class AddressDAOMySQLImpl extends AbstractAddressDAOMySQL {
+	
 	public AddressDAOMySQLImpl(DAOFactory daoFactory) {
-		this.daoFactory = daoFactory;
+		super(daoFactory);
 	}
 
 	@Override

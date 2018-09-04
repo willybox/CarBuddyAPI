@@ -1,5 +1,17 @@
 package fr.carbuddy.dao.mysql.impl;
 
+import static fr.carbuddy.global.ConstantValues.ADDRESS_ID;
+import static fr.carbuddy.global.ConstantValues.AVATAR;
+import static fr.carbuddy.global.ConstantValues.BIRTHDAY;
+import static fr.carbuddy.global.ConstantValues.E_MAIL;
+import static fr.carbuddy.global.ConstantValues.FIRSTNAME;
+import static fr.carbuddy.global.ConstantValues.GENDER;
+import static fr.carbuddy.global.ConstantValues.NAME;
+import static fr.carbuddy.global.ConstantValues.PASSWORD;
+import static fr.carbuddy.global.ConstantValues.PERSON_ID;
+import static fr.carbuddy.global.ConstantValues.STATUS_USER;
+import static fr.carbuddy.global.ConstantValues.USERNAME;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.carbuddy.bean.User;
-import fr.carbuddy.dao.AbstractUserDAO;
 import fr.carbuddy.dao.DAOFactory;
+import fr.carbuddy.dao.mysql.AbstractUserDAOMySQL;
 import fr.carbuddy.enumeration.order.by.UserOrderBy;
 import fr.carbuddy.exception.DAORuntimeException;
 import fr.carbuddy.exception.NotValidException;
@@ -18,11 +30,10 @@ import fr.carbuddy.service.PersonService;
 import fr.carbuddy.validation.UserValidation;
 import util.library.add.on.sql.AddOnSQL;
 
-public class UserDAOMySQLImpl extends AbstractUserDAO {
-	private DAOFactory daoFactory;
-
+public class UserDAOMySQLImpl extends AbstractUserDAOMySQL {
+	
 	public UserDAOMySQLImpl(DAOFactory daoFactory) {
-		this.daoFactory = daoFactory;
+		super(daoFactory);
 	}
 
 	@Override
@@ -310,9 +321,19 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
         try {
         	StringBuilder reqStr = new StringBuilder()
 	        	.append("UPDATE user ")
-	        	//TODO
-	        	//.append("SET (country, city, postal, street) ")
-	        	.append("")
+	        	.append("SET")
+	        	.append(ADDRESS_ID).append("=?, ")
+	        	.append(AVATAR).append("=?, ")
+	        	.append(BIRTHDAY).append("=?, ")
+	        	.append(E_MAIL).append("=?, ")
+	        	.append(FIRSTNAME).append("=?, ")
+	        	.append(GENDER).append("=?, ")
+	        	.append(NAME).append("=?, ")
+	        	.append(PASSWORD).append("=?, ")
+	        	.append(PERSON_ID).append("=?, ")
+	        	.append(STATUS_USER).append("=?, ")
+	        	.append(USERNAME).append("=? ")
+	        	.append("WHERE id=?")
 	        	.append(";")
         	;
         	/** Creating requests manager */
@@ -321,19 +342,18 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
     				connection,
     				reqStr.toString(),
         			true,
-        			userToUpdate.getId(),
-        			newUserInfo.getAddress(),
+        			newUserInfo.getAddress().getId(),
         			newUserInfo.getAvatar(),
         			newUserInfo.getBirthday(),
         			newUserInfo.getEmail(),
         			newUserInfo.getFirstname(),
         			newUserInfo.getGender(),
         			newUserInfo.getName(),
-        			newUserInfo.getStatusUser(),
+        			newUserInfo.getPassword(),
+        			newUserInfo.getPersonId(),
+        			newUserInfo.getStatusUser().getValue(),
         			newUserInfo.getUsername(),
-        			//TODO password?
-        			//newUserInfo.getPassword(),
-        			newUserInfo.getPersonId()
+        			userToUpdate.getId()
         		);
         	int successCount = pStatement.executeUpdate();
         	
@@ -366,8 +386,8 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
         	StringBuilder reqStr = new StringBuilder()
 	        	.append("SELECT * ")
 	        	.append("FROM user, person ")
-	        	.append("WHERE userName=? ")
-	        	.append("AND user.personId = person.id")
+	        	.append("WHERE ").append(USERNAME).append("=? ")
+	        	.append("AND user.").append(PERSON_ID).append(" = person.id")
 	        	.append(";")
         	;
         	
@@ -389,7 +409,7 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
             /** Retrieving data from result set */
             if(resultSet.next()) {
                 user = getUserFromResultSet(resultSet);
-            	long addressId = resultSet.getLong("addressId");
+            	long addressId = resultSet.getLong(ADDRESS_ID);
             	user.setAddress(
         			daoFactory.getAddressDAO().findById(addressId)
                 );
@@ -426,7 +446,7 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
         	StringBuilder reqStr = new StringBuilder()
 	        	.append("SELECT * ")
 	        	.append("FROM user, person ")
-	        	.append("WHERE user.personId = person.id ")
+	        	.append("WHERE user.").append(PERSON_ID).append(" = person.id ")
 	        	.append("ORDER BY ").append(orderBy.toString())
 	        	.append(";")
 	        ;
@@ -442,7 +462,7 @@ public class UserDAOMySQLImpl extends AbstractUserDAO {
             /** Retrieving data from result set */
             while (resultSet.next()) {
             	User user = getUserFromResultSet(resultSet);
-            	long addressId = resultSet.getLong("addressId");
+            	long addressId = resultSet.getLong(ADDRESS_ID);
             	user.setAddress(
         			daoFactory.getAddressDAO().findById(addressId)
                 );

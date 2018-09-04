@@ -2,15 +2,12 @@ package fr.carbuddy.validation;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Set;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 
 import fr.carbuddy.bean.User;
 import fr.carbuddy.enumeration.ValidationStatus;
 import fr.carbuddy.exception.NotValidException;
-import fr.carbuddy.validation.UserValidation;
 
 public class ComplexValidationTest {
 
@@ -345,7 +342,6 @@ public class ComplexValidationTest {
 		User sut = new User();
 		sut.setBirthday(new DateTime(1998, 6, 12, 0, 0).toDate());
 		UserValidation valid = new UserValidation(sut);
-		boolean result = false;
 		try {
 			valid.checkValidity();
 		} catch (NotValidException e) {

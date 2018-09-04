@@ -5,6 +5,7 @@ import java.util.Date;
 import fr.carbuddy.enumeration.TravelStatus;
 
 public class Travel {
+	private Long id;
 	private User buddy;
 	private User driver;
 	private Address rendezVous;
@@ -71,5 +72,13 @@ public class Travel {
 	
 	public void setPrice(Float price) {
 		this.price = price;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

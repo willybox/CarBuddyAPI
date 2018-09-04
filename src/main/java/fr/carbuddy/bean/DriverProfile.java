@@ -3,6 +3,7 @@ package fr.carbuddy.bean;
 import java.util.Date;
 
 public class DriverProfile {
+	private Long id;
 	/** Max buddy in vehicle */
 	private int maxBuddies;
 	private Vehicle vehicle;
@@ -57,5 +58,13 @@ public class DriverProfile {
 	
 	public void setTravelDate(Date travelDate) {
 		this.travelDate = travelDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

@@ -18,6 +18,8 @@ public interface TravelDAO {
      * @return
      */
     public List<Travel> listTravelHistoryUser(User user, boolean asc);
+
+    public Travel get(long id) throws DAORuntimeException;
     
     public boolean updateTravel(Travel travelToUpdate, Travel newTravel) throws DAORuntimeException;
     

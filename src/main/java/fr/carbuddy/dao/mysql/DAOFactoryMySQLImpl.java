@@ -13,10 +13,16 @@ import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
 import fr.carbuddy.dao.AddressDAO;
+import fr.carbuddy.dao.BuddyProfileDAO;
 import fr.carbuddy.dao.DAOFactory;
+import fr.carbuddy.dao.DriverProfileDAO;
 import fr.carbuddy.dao.UserDAO;
+import fr.carbuddy.dao.VehicleDAO;
 import fr.carbuddy.dao.mysql.impl.AddressDAOMySQLImpl;
+import fr.carbuddy.dao.mysql.impl.BuddyProfileDAOMySQLImpl;
+import fr.carbuddy.dao.mysql.impl.DriverProfileDAOMySQLImpl;
 import fr.carbuddy.dao.mysql.impl.UserDAOMySQLImpl;
+import fr.carbuddy.dao.mysql.impl.VehicleDAOMySQLImpl;
 import fr.carbuddy.exception.DAOConfigurationRuntimeException;
 import fr.carbuddy.global.GlobalValues;
 
@@ -153,5 +159,20 @@ public class DAOFactoryMySQLImpl implements DAOFactory {
     public AddressDAO getAddressDAO() {
         return new AddressDAOMySQLImpl(this);
     }
+
+	@Override
+	public BuddyProfileDAO getBuddyProfileDAO() {
+		return new BuddyProfileDAOMySQLImpl(this);
+	}
+
+	@Override
+	public DriverProfileDAO getDriverProfileDAO() {
+		return new DriverProfileDAOMySQLImpl(this);
+	}
+
+	@Override
+	public VehicleDAO getVehicleDAO() {
+		return new VehicleDAOMySQLImpl(this);
+	}
 
 }

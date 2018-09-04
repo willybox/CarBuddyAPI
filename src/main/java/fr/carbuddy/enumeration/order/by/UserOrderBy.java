@@ -7,7 +7,7 @@ public enum UserOrderBy {
 	ID_PERSON(ConstantValues.PERSON_ID),
 	NAME(ConstantValues.NAME),
 	FIRSTNAME(ConstantValues.FIRSTNAME),
-	USERNAME(ConstantValues.USER_NAME),
+	USERNAME(ConstantValues.USERNAME),
 	GENDER(ConstantValues.GENDER),
 	ID_ADDRESS(ConstantValues.ADDRESS_ID),
 	EMAIL(ConstantValues.E_MAIL),

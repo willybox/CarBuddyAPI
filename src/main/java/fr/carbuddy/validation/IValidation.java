@@ -1,9 +1,7 @@
 package fr.carbuddy.validation;
 
-import java.util.Set;
-
-import fr.carbuddy.enumeration.ValidationStatus;
+import fr.carbuddy.exception.NotValidException;
 
 public interface IValidation {
-	public Set<ValidationStatus> checkValidity();
+	public boolean checkValidity() throws NotValidException;
 }

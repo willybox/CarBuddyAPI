@@ -4,9 +4,15 @@ import java.sql.Connection;
 
 public interface DAOFactory {
 	
+	public AddressDAO getAddressDAO();
+	
+	public BuddyProfileDAO getBuddyProfileDAO();
+	
+	public DriverProfileDAO getDriverProfileDAO();
+	
 	public UserDAO getUserDAO();
 	
-	public AddressDAO getAddressDAO();
+	public VehicleDAO getVehicleDAO();
 	
 	public Connection getConnection();
 }

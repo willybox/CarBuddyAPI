@@ -53,6 +53,16 @@ public enum ValidationStatus {
 		"Vous devez avoir 18 ans pour utiliser cette application"
 	),
 	
+	BRAND_EMPTY(
+		"Please specify your vehicle brand (Ex: Fiat, Citroën, Volkswagen...)",
+		"Veuillez préciser la marque de votre véhicule (Ex: Fiat, Citroën, Volkswagen...)"
+	),
+	
+	BUDDY_NULL(
+		"Making a travel without buddy is boring... Select one of your buddy",
+		"Faire un voyage sans buddy est d'un ennui... Sélectionne-en un."
+	),
+	
 	CITY_EMPTY(
 		"Please specify your city",
 		"Veuillez préciser votre ville"
@@ -68,6 +78,16 @@ public enum ValidationStatus {
 		"Veuillez sélectionner votre pays"
 	),
 	
+	DATE_NULL(
+		"Please specify a date",
+		"Veuillez préciser la date"
+	),
+	
+	DRIVER_NULL(
+		"Please ask for a driver to get you there",
+		"Veulliez sélectionner un conducteur pour vous y amener."
+	),
+	
 	EMAIL_EMPTY(
 		"The e-mail can not be empty",
 		"L'e-mail ne peut pas être vide"
@@ -81,6 +101,21 @@ public enum ValidationStatus {
 	INVALID_USERNAME_OR_PASSWORD(
 		"You have entered an invalid username or password.",
 		"Vous avez entré le mauvais nom d'utilisateur ou mot de passe."
+	),
+	
+	MAX_BUDDIES_NEGATIVE(
+		"You must set at leat one max buddy.",
+		"Vous devez mettre au moins un buddy au maximum."
+	),
+	
+	MAX_BUDDIES_OVER_BOOKED(
+		"Your vehicle can not transprot this much passengers",
+		"Votre véhicule ne peut pas transporter autant de passagers"
+	),
+	
+	MODEL_EMPTY(
+		"Please specify your vehicle model (Ex: Fiat 500, Citroën C3...)",
+		"Veuillez préciser le modèle de votre véhicule (Ex: Fiat 500, Citroën C3...)"
 	),
 	
 	NAME_EMPTY(
@@ -133,9 +168,29 @@ public enum ValidationStatus {
 		"Veuillez préciser votre code postal"
 	),
 	
+	RENDEZ_VOUS_NULL(
+		"Please specify your rendez-vous (meeting) point",
+		"Veuillez préciser votre point de rendez-vous"
+	),
+	
 	STREET_EMPTY(
 		"Please specify your street",
 		"Veuillez préciser votre rue"
+	),
+	
+	TERMINUS_NULL(
+		"Please specify your terminus (destination)",
+		"Veuillez préciser votre terminus"
+	),
+	
+	TOTAL_PLACES_NOT_ENOUGH(
+		"The vehicle must at least contain 2 places",
+		"Le véhicule doit comporter au moins 2 places"
+	),
+	
+	TRAVEL_DATE_PAST(
+		"Doc has forbidden travelling in the past Marty!",
+		"Doc nous a interdit de voyager dans le passé Marty!"
 	),
 	
 	USERNAME_ALREADY_EXISTS(

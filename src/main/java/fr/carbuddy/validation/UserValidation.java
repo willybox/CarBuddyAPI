@@ -5,6 +5,7 @@ import java.util.Set;
 
 import fr.carbuddy.bean.User;
 import fr.carbuddy.enumeration.ValidationStatus;
+import fr.carbuddy.exception.NotValidException;
 import util.library.add.on.string.AddOnString;
 
 public class UserValidation implements IValidation {
@@ -59,12 +60,20 @@ public class UserValidation implements IValidation {
 	}
 	
 	private Set<ValidationStatus> validationPerson() {
-		return new PersonValidation(user).checkValidity();
+		try {
+			if(new PersonValidation(user).checkValidity()) {
+				
+			}
+		} catch (NotValidException e) {
+			return e.getErrorsValidation();
+		}
+		return new HashSet<>();
 	}
 
 	@Override
-	public Set<ValidationStatus> checkValidity() {
-		Set<ValidationStatus> listErrors = new HashSet<>();
+	public boolean checkValidity() throws NotValidException {
+		NotValidException exceptionValidation = new NotValidException();
+		Set<ValidationStatus> listErrors = exceptionValidation.getErrorsValidation();
 		listErrors.add(validationNewPassword());
 		listErrors.add(validationUsername());
 		listErrors.addAll(validationPerson());
@@ -72,7 +81,10 @@ public class UserValidation implements IValidation {
 		/** Removing OK because it is not an error */
 		listErrors.remove(ValidationStatus.OK);
 		
-		return listErrors;
+		if(!listErrors.isEmpty()) {
+			throw exceptionValidation;
+		}
+		return listErrors.isEmpty();
 	}
 
 }

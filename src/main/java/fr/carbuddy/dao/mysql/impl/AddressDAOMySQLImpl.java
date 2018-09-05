@@ -27,11 +27,6 @@ public class AddressDAOMySQLImpl extends AbstractAddressDAOMySQL {
 		/** Will throw exception if not valid */
 		new AddressValidation(addressToCreate).checkValidity();
 		
-		Address existingAddress = getAddress(addressToCreate);
-		if(existingAddress != null) {
-			return existingAddress;
-		}
-		
 		Connection connection = daoFactory.getConnection();
 		PreparedStatement pStatement = null;
         ResultSet resultSet = null;

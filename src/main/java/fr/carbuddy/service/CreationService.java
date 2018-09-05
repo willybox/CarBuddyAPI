@@ -93,6 +93,11 @@ public class CreationService {
 		address.setCountry(country);
 		address.setPostal(postal);
 		address.setStreet(street);
+		
+		Address existingAddress = daoFactory.getAddressDAO().getAddress(address);
+		if(existingAddress != null) {
+			return existingAddress;
+		}
 
 		/** Persisting data */
 		daoFactory.getAddressDAO().create(address);

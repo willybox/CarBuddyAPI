@@ -17,6 +17,10 @@ public interface UserDAO {
     
     public List<User> listUser(UserOrderBy orderBy, boolean asc);
     
+    public List<User> listDrivers(UserOrderBy orderBy, boolean asc);
+    
+    public List<User> listBuddies(UserOrderBy orderBy, boolean asc);
+    
     public boolean updateUser(User userToUpdate, User newUser) throws DAORuntimeException;
     
     public boolean deleteUser(User userToDelete) throws DAORuntimeException;

@@ -482,4 +482,116 @@ public class UserDAOMySQLImpl extends AbstractUserDAOMySQL {
         return users;
 	}
 
+	@Override
+	public List<User> listDrivers(UserOrderBy orderBy, boolean asc) {
+
+		List<User> users = new ArrayList<>();
+        
+        Connection connection = daoFactory.getConnection();
+        if(connection == null) {
+        	return users;
+        }
+        
+        PreparedStatement pStatement = null;
+        ResultSet resultSet = null;
+        try {
+        	if(orderBy == null) {
+        		orderBy = UserOrderBy.ID_USER;
+        	}
+        	StringBuilder reqStr = new StringBuilder()
+	        	.append("SELECT * ")
+	        	.append("FROM user, person ")
+	        	.append("WHERE user.").append(PERSON_ID).append(" = person.id ")
+	        	.append("AND driverProfile > 0 ")
+	        	.append("ORDER BY ").append(orderBy.toString())
+	        	.append(";")
+	        ;
+        	System.out.print("Request \"" + reqStr.toString());
+        	
+            /** Creating requests manager */
+            pStatement = connection.prepareStatement(reqStr.toString());
+
+            /** Executing SELECT */
+            resultSet = pStatement.executeQuery();
+            System.out.println("\" done.");
+     
+            /** Retrieving data from result set */
+            while (resultSet.next()) {
+            	User user = getUserFromResultSet(resultSet);
+            	long addressId = resultSet.getLong(ADDRESS_ID);
+            	user.setAddress(
+        			daoFactory.getAddressDAO().findById(addressId)
+                );
+            	users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DAORuntimeException("Error during the connection");
+        } finally {
+        	AddOnSQL.fancyClosures(
+        		resultSet,
+        		pStatement,
+        		connection,
+        		GlobalValues.NO_DEBUG
+        	);
+        }
+
+        return users;
+	}
+
+	@Override
+	public List<User> listBuddies(UserOrderBy orderBy, boolean asc) {
+
+		List<User> users = new ArrayList<>();
+        
+        Connection connection = daoFactory.getConnection();
+        if(connection == null) {
+        	return users;
+        }
+        
+        PreparedStatement pStatement = null;
+        ResultSet resultSet = null;
+        try {
+        	if(orderBy == null) {
+        		orderBy = UserOrderBy.ID_USER;
+        	}
+        	StringBuilder reqStr = new StringBuilder()
+	        	.append("SELECT * ")
+	        	.append("FROM user, person ")
+	        	.append("WHERE user.").append(PERSON_ID).append(" = person.id ")
+	        	.append("AND buddyProfile > 0 ")
+	        	.append("ORDER BY ").append(orderBy.toString())
+	        	.append(";")
+	        ;
+        	System.out.print("Request \"" + reqStr.toString());
+        	
+            /** Creating requests manager */
+            pStatement = connection.prepareStatement(reqStr.toString());
+
+            /** Executing SELECT */
+            resultSet = pStatement.executeQuery();
+            System.out.println("\" done.");
+     
+            /** Retrieving data from result set */
+            while (resultSet.next()) {
+            	User user = getUserFromResultSet(resultSet);
+            	long addressId = resultSet.getLong(ADDRESS_ID);
+            	user.setAddress(
+        			daoFactory.getAddressDAO().findById(addressId)
+                );
+            	users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DAORuntimeException("Error during the connection");
+        } finally {
+        	AddOnSQL.fancyClosures(
+        		resultSet,
+        		pStatement,
+        		connection,
+        		GlobalValues.NO_DEBUG
+        	);
+        }
+
+        return users;
+	}
+
 }

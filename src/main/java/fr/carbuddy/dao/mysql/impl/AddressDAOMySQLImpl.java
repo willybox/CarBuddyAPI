@@ -1,5 +1,7 @@
 package fr.carbuddy.dao.mysql.impl;
 
+import static fr.carbuddy.global.ConstantValues.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -347,7 +349,7 @@ public class AddressDAOMySQLImpl extends AbstractAddressDAOMySQL {
         ResultSet resultSet = null;
         try {
         	StringBuilder reqStr = new StringBuilder()
-    			.append("SELECT DISTINCT street")
+    			.append("SELECT DISTINCT ").append(STREET)
 	        	.append("FROM address ")
 	        	.append(";");
             System.out.println("Request \"" + reqStr.toString());
@@ -366,7 +368,7 @@ public class AddressDAOMySQLImpl extends AbstractAddressDAOMySQL {
      
             /** Retrieving data from result set */
             while(resultSet.next()) {
-            	streets.add(resultSet.getString("street"));
+            	streets.add(resultSet.getString(STREET));
             }
         } catch (SQLException e) {
             throw new DAORuntimeException("Error during the connection");

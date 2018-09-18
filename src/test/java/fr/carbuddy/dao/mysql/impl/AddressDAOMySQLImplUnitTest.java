@@ -18,7 +18,7 @@ public class AddressDAOMySQLImplUnitTest {
 	
 	@BeforeClass
 	public static void init() {
-		daoFactory = DAOFactoryMySQLImpl.getInstance();
+		daoFactory = DAOFactoryMySQLImpl.getInstance(true);
 	}
 	
 	@Test(expected=NullPointerException.class)

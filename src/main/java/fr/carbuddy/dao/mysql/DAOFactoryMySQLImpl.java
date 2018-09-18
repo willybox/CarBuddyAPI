@@ -30,6 +30,7 @@ public class DAOFactoryMySQLImpl implements DAOFactory {
 
     private static final String FICHIER_PROPERTIES = "/fr/carbuddy/dao.properties";
     private static final String PROPERTY_URL = "url";
+    private static final String PROPERTY_URL_TEST = "urltest";
     private static final String PROPERTY_DRIVER = "driver";
     private static final String PROPERTY_USER = "user";
     private static final String PROPERTY_PASSWORD = "pass";
@@ -45,7 +46,7 @@ public class DAOFactoryMySQLImpl implements DAOFactory {
 	 * @return
 	 * @throws DAOConfigurationRuntimeException
 	 */
-    public static DAOFactory getInstance() throws DAOConfigurationRuntimeException {
+    public static DAOFactory getInstance(boolean test) throws DAOConfigurationRuntimeException {
         Properties properties = new Properties();
         String url;
         String userName;
@@ -81,7 +82,9 @@ public class DAOFactoryMySQLImpl implements DAOFactory {
         }
         try {
             properties.load(fichierProperties);
-            url = properties.getProperty(PROPERTY_URL);
+            url = test
+            	? properties.getProperty(PROPERTY_URL_TEST)
+            	: properties.getProperty(PROPERTY_URL);
             driver = properties.getProperty(PROPERTY_DRIVER);
             userName = properties.getProperty(PROPERTY_USER);
             pass = properties.getProperty(PROPERTY_PASSWORD);
